@@ -1,4 +1,4 @@
-
+@if(!getListItems().length) {
 <div class="container">
     <img 
         src="assets/img/task-list-null.png" 
@@ -11,7 +11,29 @@
             Crie uma lista de Tarefas
         </button>
     } @else {
-        <app-input-add-item (outputAddListItems)="getInputAndAddItem($event)"/>
+        <app-input-add-item [inputListItems]="getListItems()" (outputAddListItems)="getInputAndAddItem($event)"/>
     }
 </div>
-{{   getListItems() | json }}
+} @else {
+    <app-input-add-item [inputListItems]="getListItems()" (outputAddListItems)="getInputAndAddItem($event)"/>
+
+    <main class="container">
+        @if(listItemsStage('pending').length) {
+            <h2>Pendências</h2>
+            <app-input-list-item [inputListItems]="listItemsStage('pending')" (outputUpdateItemCheckbox)="updateItemCheckbox($event)"
+            (outputUpdateItemText)="updateItemText($event)" (outputDeleteItemText)="deleteItemText($event)"/>
+        }
+
+        @if(listItemsStage('completed').length) {
+            <h2>Concluidas</h2>
+            <app-input-list-item [inputListItems]="listItemsStage('completed')" (outputUpdateItemCheckbox)="updateItemCheckbox($event)"
+            (outputUpdateItemText)="updateItemText($event)" (outputDeleteItemText)="deleteItemText($event)"/>
+        }
+    </main>
+
+    <footer>
+        <button class="btn btn-danger" (click)="deleteAllItems()">
+            Deletar todos itens
+        </button>
+    </footer>
+}

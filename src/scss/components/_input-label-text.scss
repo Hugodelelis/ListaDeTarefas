@@ -19,6 +19,12 @@
         color: var(--white);
         outline: 0;
         margin-left: 10px;
+
+        &:-webkit-autofill {
+            background-color: var(--black-010) !important;
+            -webkit-text-fill-color: var(--white) !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
     }
 
     input[type="checkbox"] {
